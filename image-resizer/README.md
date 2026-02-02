@@ -1,22 +1,20 @@
 # Image Resizer - Tauri + React + Rust
 
-A desktop application for batch resizing images with custom presets. Built with Tauri (Rust backend + React frontend) to learn Rust while building something useful!
+heyy this is a desktop application for resizing multiple images with using presets you can fine tune yourself!. Built with Tauri (Rust backend + React frontend) to learn Rust while building something useful. You define presets (name, width, height, format PNG/JPG/WebP, optional quality) in the PresetList, add images via drag-and-drop or file picker in the UploadArea, then choose which presets and files to useeee
 
-## 🦀 Learning Rust Concepts
-
-This project teaches you Rust through practical application:
+## Crab Features 
 
 1. **Structs** - Data structures (like TypeScript interfaces)
-2. **Result<T, E>** - Explicit error handling (no exceptions!)
-3. **Ownership & Borrowing** - Rust's memory safety system
+2. **Result<T, E>** - Explicit error handling (non exceptions!)
+3. **Ownership & Borrowing** - Rust's lovely memory safety system
 4. **Pattern Matching** - Exhaustive `match` expressions
 5. **Option<T>** - Handling nullable values safely
 6. **Async/Await** - Modern async programming
 7. **Error Propagation** - The `?` operator
 
-## 🚀 Getting Started
+-=-
 
-### Prerequisites
+### Prereqs
 
 - **Node.js** (v18+) and npm
 - **Rust** - Install from [rustup.rs](https://rustup.rs/)
@@ -25,27 +23,14 @@ This project teaches you Rust through practical application:
   - **macOS**: Xcode Command Line Tools
   - **Windows**: Microsoft C++ Build Tools
 
+
 ### Installation
+- make sure rust is installed 
+- install sys dependances (libwebkit here)
+- confirm you have the latest verison of node running 
 
-1. **Install Rust** (if not already installed):
-   ```bash
-   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-   ```
+    **Run the app**:
 
-2. **Install system dependencies** (Linux):
-   ```bash
-   # Ubuntu/Debian
-   sudo apt update
-   sudo apt install libwebkit2gtk-4.0-dev build-essential curl wget libssl-dev libayatana-appindicator3-dev librsvg2-dev
-   ```
-
-3. **Install Node dependencies**:
-   ```bash
-   cd image-resizer
-   npm install
-   ```
-
-4. **Run the app**:
    ```bash
    npm run tauri dev
    ```
@@ -73,27 +58,9 @@ image-resizer/
 3. **Backend (Rust)**: Processes images using the `image` crate, saves results
 4. **Result**: Resized images saved to disk
 
-## 🧠 Key Rust Concepts Explained
+## 🧠 whats happening 
+   - When you click Export, the app asks for an output folder and, for each image and each selected preset, reads the file as bytes, calls the Rust command resize_image with that data plus the preset and output path, and the backend loads the image, resizes it with Lanczos3, and saves as PNG or JPEG (WebP currently falls back to PNG). You run it from the image-resizer folder with npm run tauri dev, with Node and the Rust toolchain installed.
 
-### 1. Ownership
-Rust tracks who "owns" memory. When you pass a `String` to a function, ownership transfers. Use `&str` (reference) to borrow instead.
-
-### 2. Result<T, E>
-Functions return `Result<SuccessType, ErrorType>`. You MUST handle errors - no silent failures!
-
-### 3. Pattern Matching
-`match` expressions are exhaustive - you can't forget a case. This prevents bugs.
-
-### 4. Option<T>
-Like `null` in other languages, but safer. `Some(value)` or `None` - compiler forces you to handle both.
-
-## 🛠️ Building for Production
-
-```bash
-npm run tauri build
-```
-
-This creates an executable in `src-tauri/target/release/`.
 
 ## 📚 Learning Resources
 

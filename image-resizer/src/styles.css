@@ -1,3 +1,18 @@
+/* Minimal design system */
+:root {
+  --bg: #fafafa;
+  --surface: #fff;
+  --border: #e5e5e5;
+  --text: #171717;
+  --text-muted: #737373;
+  --accent: #171717;
+  --accent-hover: #404040;
+  --danger: #dc2626;
+  --radius: 6px;
+  --space: 1.5rem;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,16 +20,282 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #1a1a1a;
-  color: #e0e0e0;
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* App layout */
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem var(--space);
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+  color: var(--text);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.app-export {
+  margin-top: 2rem;
+}
+
+/* Section blocks */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space);
+}
+
+.section-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+/* Buttons */
+.btn {
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--bg);
+  border-color: var(--text-muted);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--surface);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-danger {
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.btn-danger:hover {
+  color: var(--danger);
+}
+
+/* Form inputs */
+.input,
+.select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.15s;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--text-muted);
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.form-actions {
+  margin-top: 1rem;
+}
+
+/* Preset list */
+.preset-form {
+  padding-top: var(--space);
+  margin-bottom: var(--space);
+  border-top: 1px solid var(--border);
+}
+
+.preset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.preset-item {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.preset-item:hover {
+  background: var(--bg);
+}
+
+.preset-item.is-selected {
+  background: var(--bg);
+}
+
+.preset-item input[type="checkbox"] {
+  margin-right: 0.75rem;
+  accent-color: var(--accent);
+}
+
+.preset-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.preset-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.125rem;
+}
+
+.empty-state {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: 0.5rem 0;
+}
+
+/* Upload area */
+.dropzone {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: var(--space);
+  background: var(--bg);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.dropzone:hover,
+.dropzone.dragover {
+  border-color: var(--text-muted);
+  background: var(--surface);
+}
+
+.dropzone-text {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.dropzone .btn {
+  cursor: pointer;
+}
+
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+/* Export queue */
+.queue-list {
+  margin-bottom: var(--space);
+}
+
+.queue-file {
+  margin-bottom: 0.75rem;
+}
+
+.queue-file-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.queue-presets {
+  padding-left: 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.queue-presets div {
+  margin-bottom: 0.125rem;
+}
+
+.export-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-weight: 500;
+}
+
+.progress-message {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border-radius: var(--radius);
 }

@@ -10,13 +10,11 @@ function App() {
   const [selectedPresets, setSelectedPresets] = useState<string[]>([]);
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "1200px", margin: "0 auto" }}>
-      <h1 style={{ marginBottom: "2rem", fontSize: "2rem" }}>
-        Image Resizer
-      </h1>
+    <div className="app">
+      <h1 className="app-title">Image Resizer</h1>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
-        <div>
+      <div className="app-grid">
+        <div className="section">
           <PresetList
             presets={presets}
             onPresetsChange={setPresets}
@@ -25,7 +23,7 @@ function App() {
           />
         </div>
 
-        <div>
+        <div className="section">
           <UploadArea
             files={selectedFiles}
             onFilesChange={setSelectedFiles}
@@ -34,11 +32,13 @@ function App() {
       </div>
 
       {selectedFiles.length > 0 && selectedPresets.length > 0 && (
-        <div style={{ marginTop: "2rem" }}>
-          <ExportQueue
-            files={selectedFiles}
-            presets={presets.filter((p) => selectedPresets.includes(p.id))}
-          />
+        <div className="app-export">
+          <div className="section">
+            <ExportQueue
+              files={selectedFiles}
+              presets={presets.filter((p) => selectedPresets.includes(p.id))}
+            />
+          </div>
         </div>
       )}
     </div>

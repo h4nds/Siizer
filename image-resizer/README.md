@@ -1,12 +1,14 @@
 # Image Resizer - Tauri + React + Rust
 
-heyy this is a desktop application for resizing multiple images with using presets you can fine tune yourself!. Built with Tauri (Rust backend + React frontend) to learn Rust while building something useful. You define presets (name, width, height, format PNG/JPG/WebP, optional quality) in the PresetList, add images via drag-and-drop or file picker in the UploadArea, then choose which presets and files to useeee
+
+               
+ heyy this Siizer!! is a desktop application for resizing multiple images with using presets you can fine tune yourself!. Built with Tauri (Rust backend + React frontend) to learn Rust while building something useful. You define presets (name, width, height, format PNG/JPG/WebP, optional quality) in the PresetList, add images via drag-and-drop or file picker in the UploadArea, then choose which presets and files to useeee
 
 ## Crab Features 
 
 1. **Structs** - Data structures (like TypeScript interfaces)
 2. **Result<T, E>** - Explicit error handling (non exceptions!)
-3. **Ownership & Borrowing** - Rust's lovely memory safety system
+3. **Ownership & Borrowing** - Rust's lovely memory safety system 
 4. **Pattern Matching** - Exhaustive `match` expressions
 5. **Option<T>** - Handling nullable values safely
 6. **Async/Await** - Modern async programming

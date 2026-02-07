@@ -22,7 +22,8 @@ function App() {
 
   return (
     <div className="app">
-      <h1 className="app-title">Image Resizer</h1>
+      <h1 className="app-title">Siizer</h1>
+      <p className="app-tagline">Resize multiple images with presets you fine-tune.</p>
 
       <div className="app-grid">
         <div className="section">
@@ -54,20 +55,22 @@ function App() {
       )}
 
       <div className="theme-toggle">
-        <button
-          type="button"
-          className={theme === "light" ? "is-active" : ""}
-          onClick={() => setTheme("light")}
-        >
-          Light
-        </button>
-        <button
-          type="button"
-          className={theme === "dark" ? "is-active" : ""}
-          onClick={() => setTheme("dark")}
-        >
-          Dark
-        </button>
+        <div className="theme-toggle-inner">
+          <button
+            type="button"
+            className={theme === "light" ? "is-active" : ""}
+            onClick={() => setTheme("light")}
+          >
+            Light
+          </button>
+          <button
+            type="button"
+            className={theme === "dark" ? "is-active" : ""}
+            onClick={() => setTheme("dark")}
+          >
+            Dark
+          </button>
+        </div>
       </div>
     </div>
   );

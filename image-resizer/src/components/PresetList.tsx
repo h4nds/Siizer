@@ -8,6 +8,14 @@ interface Props {
   onSelectedPresetsChange: (ids: string[]) => void;
 }
 
+const initialFormData = {
+  name: "",
+  width: "",
+  height: "",
+  format: "png" as Preset["format"],
+  quality: "90",
+};
+
 export default function PresetList({
   presets,
   onPresetsChange,
@@ -15,13 +23,7 @@ export default function PresetList({
   onSelectedPresetsChange,
 }: Props) {
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    width: "",
-    height: "",
-    format: "png" as const,
-    quality: "90",
-  });
+  const [formData, setFormData] = useState<typeof initialFormData>(initialFormData);
 
   const handleAddPreset = () => {
     const newPreset: Preset = {
@@ -34,13 +36,7 @@ export default function PresetList({
     };
 
     onPresetsChange([...presets, newPreset]);
-    setFormData({
-      name: "",
-      width: "",
-      height: "",
-      format: "png",
-      quality: "90",
-    });
+    setFormData(initialFormData);
     setShowForm(false);
   };
 

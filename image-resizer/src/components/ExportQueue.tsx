@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/dialog";
 import { Preset } from "../types";
+
+function fileKey(file: File): string {
+  return `${file.name}-${file.size}-${file.lastModified}`;
+}
 
 interface Props {
   files: File[];
@@ -11,6 +15,36 @@ interface Props {
 export default function ExportQueue({ files, presets }: Props) {
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState<string>("");
+  const [dimensions, setDimensions] = useState<Record<string, { width: number; height: number }>>({});
+
+  useEffect(() => {
+    if (files.length === 0) {
+      setDimensions({});
+      return;
+    }
+    const urls: string[] = [];
+    const next: Record<string, { width: number; height: number }> = {};
+    let pending = files.length;
+    files.forEach((file) => {
+      const key = fileKey(file);
+      const url = URL.createObjectURL(file);
+      urls.push(url);
+      const img = new Image();
+      img.onload = () => {
+        next[key] = { width: img.naturalWidth, height: img.naturalHeight };
+        URL.revokeObjectURL(url);
+        pending--;
+        if (pending === 0) setDimensions((d) => ({ ...d, ...next }));
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        pending--;
+        if (pending === 0) setDimensions((d) => ({ ...d, ...next }));
+      };
+      img.src = url;
+    });
+    return () => urls.forEach(URL.revokeObjectURL);
+  }, [files]);
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -86,6 +120,19 @@ export default function ExportQueue({ files, presets }: Props) {
 
   const totalExports = files.length * presets.length;
 
+  const isSizeUp = (() => {
+    for (const file of files) {
+      const dims = dimensions[fileKey(file)];
+      if (!dims) continue;
+      const srcArea = dims.width * dims.height;
+      for (const preset of presets) {
+        const outArea = preset.width * preset.height;
+        if (outArea > srcArea) return true;
+      }
+    }
+    return false;
+  })();
+
   return (
     <>
       <h2 className="section-title">
@@ -115,6 +162,16 @@ export default function ExportQueue({ files, presets }: Props) {
       >
         {isExporting ? "Exporting…" : `Export ${totalExports} file${totalExports !== 1 ? "s" : ""}`}
       </button>
+
+      {totalExports > 0 && (
+        <div className="export-reaction">
+          <img
+            src={isSizeUp ? "/images/sizeup.gif" : "/images/sizedown.gif"}
+            alt=""
+            className="export-reaction-gif"
+          />
+        </div>
+      )}
 
       {exportProgress && (
         <div className="progress-message">{exportProgress}</div>

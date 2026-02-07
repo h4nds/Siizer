@@ -52,7 +52,8 @@ body {
 }
 
 .app-title {
-  font-size: 3rem;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 48px;
   font-weight: 900;
   letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
@@ -306,12 +307,30 @@ body {
 
 .file-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   font-size: 0.8125rem;
   border-radius: var(--radius);
   background: var(--bg);
+}
+
+.file-item-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.file-item-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Export queue */
@@ -411,4 +430,90 @@ body {
 .theme-toggle button:focus-visible {
   outline: 2px solid var(--text-muted);
   outline-offset: 2px;
+}
+
+/* Preset panel (draggable floating window) */
+.preset-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 1000;
+}
+
+.preset-panel {
+  position: fixed;
+  width: 320px;
+  z-index: 1001;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+[data-theme="dark"] .preset-panel {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.preset-panel.open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.preset-panel-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem var(--space);
+  border-bottom: 1px solid var(--border);
+  cursor: move;
+  user-select: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.preset-panel-close {
+  font-family: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: color 0.15s;
+}
+
+.preset-panel-close:hover {
+  color: var(--text);
+}
+
+.preset-panel-form {
+  padding: var(--space);
+}
+
+.preset-panel-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.preset-panel-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.preset-panel-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }

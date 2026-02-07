@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+
+function fileKey(file: File): string {
+  return `${file.name}-${file.size}-${file.lastModified}`;
+}
 
 interface Props {
   files: File[];
@@ -7,6 +11,23 @@ interface Props {
 
 export default function UploadArea({ files, onFilesChange }: Props) {
   const [isDragging, setIsDragging] = useState(false);
+  const urlsRef = useRef<Record<string, string>>({});
+
+  const getUrl = (file: File): string => {
+    const key = fileKey(file);
+    if (!urlsRef.current[key]) {
+      urlsRef.current[key] = URL.createObjectURL(file);
+    }
+    return urlsRef.current[key];
+  };
+
+  useEffect(() => {
+    const current = urlsRef.current;
+    return () => {
+      Object.values(current).forEach(URL.revokeObjectURL);
+      Object.keys(current).forEach((k) => delete current[k]);
+    };
+  }, []);
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -27,6 +48,13 @@ export default function UploadArea({ files, onFilesChange }: Props) {
   };
 
   const removeFile = (index: number) => {
+    const file = files[index];
+    const key = fileKey(file);
+    const url = urlsRef.current[key];
+    if (url) {
+      URL.revokeObjectURL(url);
+      delete urlsRef.current[key];
+    }
     onFilesChange(files.filter((_, i) => i !== index));
   };
 
@@ -59,8 +87,13 @@ export default function UploadArea({ files, onFilesChange }: Props) {
       {files.length > 0 && (
         <div className="file-list">
           {files.map((file, index) => (
-            <div key={index} className="file-item">
-              <span>{file.name}</span>
+            <div key={fileKey(file)} className="file-item">
+              <img
+                src={getUrl(file)}
+                alt={file.name}
+                className="file-item-thumb"
+              />
+              <span className="file-item-name">{file.name}</span>
               <button
                 type="button"
                 className="btn btn-danger"

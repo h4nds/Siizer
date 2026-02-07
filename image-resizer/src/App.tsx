@@ -20,6 +20,39 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      const active = document.activeElement;
+      const isInput = active && (
+        active.tagName === "INPUT" ||
+        active.tagName === "TEXTAREA" ||
+        (active as HTMLElement).isContentEditable
+      );
+      if (isInput) return;
+
+      const items = e.clipboardData?.items;
+      if (!items) return;
+
+      const imageFiles: File[] = [];
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.kind === "file" && item.type.startsWith("image/")) {
+          const file = item.getAsFile();
+          if (file) {
+            const name = file.name || `pasted-${Date.now()}.${item.type.split("/")[1] || "png"}`;
+            imageFiles.push(file.name ? file : new File([file], name, { type: file.type }));
+          }
+        }
+      }
+      if (imageFiles.length > 0) {
+        e.preventDefault();
+        setSelectedFiles((prev) => [...prev, ...imageFiles]);
+      }
+    };
+    document.addEventListener("paste", handlePaste);
+    return () => document.removeEventListener("paste", handlePaste);
+  }, []);
+
   return (
     <div className="app">
       <h1 className="app-title">Siizer</h1>

@@ -71,7 +71,7 @@ export default function UploadArea({ files, onFilesChange }: Props) {
         }}
         onDragLeave={() => setIsDragging(false)}
       >
-        <p className="dropzone-text">Drop images here or</p>
+        <p className="dropzone-text">Drop images here, paste (Ctrl+V), or</p>
         <label className="btn btn-primary">
           Browse
           <input

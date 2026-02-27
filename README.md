@@ -2,7 +2,7 @@
 
 
                
- heyy this Siizer!! is a desktop application for resizing multiple images with using presets you can fine tune yourself!. Built with Tauri (Rust backend + React frontend) to learn Rust while building something useful. You define presets (name, width, height, format PNG/JPG/WebP, optional quality) in the PresetList, add images via drag-and-drop or file picker in the UploadArea, then choose which presets and files to useeee
+ heyy this is Siizer!! is a desktop application for resizing multiple images with using presets you can fine tune yourself!. Built with Tauri (Rust backend + React frontend) to learn Rust while building something useful. You define presets (name, width, height, format PNG/JPG/WebP, optional quality) in the PresetList, add images via drag-and-drop or file picker in the UploadArea, then choose which presets and files to useeee
 
 ## Crab Features 
 
